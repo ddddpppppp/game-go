@@ -1,0 +1,46 @@
+server:
+  address: ":8000"
+  openapiPath: "/api.json"
+  swaggerPath: "/swagger"
+
+logger:
+  level: "all"
+  path: "logs/"
+  file: "{Ymd}.log"
+  stdout: false
+  aliyun:
+    enable: false
+    endpoint: "us-east-1.log.aliyuncs.com"
+    access_key_id: ""
+    access_key_secret: ""
+    project: "goframe"
+    logstore: "goframe-logs"
+    topic: "goframe-topic"
+    source: "127.0.0.1"
+    compress_type: 1 # 压缩类型: 0=不压缩, 1=LZ4(默认), 2=zlib, 3=zstd
+
+database:
+  default:
+    debug: false
+    host: "127.0.0.1"
+    port: "3306"
+    user: "php_game_hub_cc"
+    pass: "962aa2f8922088"
+    name: "php_game_hub_cc"
+    type: "mysql"
+    extra: "charset=utf8mb4&parseTime=true&loc=Local"
+
+redis:
+  default:
+    address: "127.0.0.1:6379"
+    pass: "qq123456789"
+    db: 0
+
+oss:
+  enable: false # 是否启用OSS上传
+  endpoint: "oss-us-east-1.aliyuncs.com" # OSS端点
+  access_key_id: ""
+  access_key_secret: ""
+  bucket_name: "aiservice-prod" # Bucket名称
+  # domain: "https://your-custom-domain.com" # 自定义域名（可选）
+  timeout: 60 # 超时时间（秒）

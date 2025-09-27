@@ -1,0 +1,22 @@
+package cmd
+
+import (
+	"context"
+	crontab_game_canada28 "demo/internal/crontab/game_canada28"
+
+	"github.com/gogf/gf/v2/os/gcron"
+)
+
+type Cron struct{}
+
+func RegisterCron(ctx context.Context) {
+	//c := &Cron{}
+	// 读取加拿大28开奖结果
+	gcron.Add(ctx, "* * * * * *", func(ctx context.Context) {
+		crontab_game_canada28.NewSyncCanada28ResCron(ctx).DoSync()
+	})
+	// 锁定加拿大28开奖结果
+	gcron.Add(ctx, "* * * * * *", func(ctx context.Context) {
+		crontab_game_canada28.NewLockCanada28Cron(ctx).DoLock()
+	})
+}
