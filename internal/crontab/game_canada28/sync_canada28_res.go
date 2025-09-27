@@ -730,7 +730,7 @@ func (c *SyncCanada28ResCron) bonus(draw *do.Canada28Draws) {
 			}
 			message += fmt.Sprintf("%d. %s won %.2f\n", i+1, winner.nickname, winner.winAmount)
 		}
-		message += "Congratulations to the winners!"
+		message += "Congratulations to the top 20 winners!"
 	}
 	err = game_canada28_ws.BroadcastToAllUsers(c.ctx, g.Map{
 		"action": "new_message",
