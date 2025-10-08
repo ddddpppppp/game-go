@@ -413,6 +413,7 @@ func (c *SyncCanada28ResCron) bonus(draw *do.Canada28Draws) {
 
 	// 遍历所有投注记录计算中奖情况
 	for _, bet := range bets {
+		betName := gconv.String(bet.BetName)
 		betType := gconv.String(bet.BetType)
 		betAmount := gconv.Float64(bet.Amount)
 		multiplier := gconv.Float64(bet.Multiplier)
@@ -524,7 +525,7 @@ func (c *SyncCanada28ResCron) bonus(draw *do.Canada28Draws) {
 				userUuid:    gconv.String(user.Uuid),
 				userId:      gconv.Int(user.Id),
 				winAmount:   normalWinAmount,
-				description: fmt.Sprintf("Keno Win - Period:%s, Bet Type:%s, Multiplier:%.2f (Original:%.2f)", draw.PeriodNumber, betType, finalMultiplier, multiplier),
+				description: fmt.Sprintf("Canada28 Win - Period:%s, Bet Type:%s, Multiplier:%.2f (Original:%.2f)", draw.PeriodNumber, betName, finalMultiplier, multiplier),
 				relatedId:   betId,
 				oldBalance:  oldBalance,
 				newBalance:  newBalance,
@@ -543,7 +544,7 @@ func (c *SyncCanada28ResCron) bonus(draw *do.Canada28Draws) {
 					userUuid:    gconv.String(user.Uuid),
 					userId:      gconv.Int(user.Id),
 					winAmount:   frozenWinAmount,
-					description: fmt.Sprintf("Keno Win - Period:%s, Bet Type:%s, Multiplier:%.2f (Original:%.2f) [Frozen Balance]", draw.PeriodNumber, betType, finalMultiplier, multiplier),
+					description: fmt.Sprintf("Canada28 Win - Period:%s, Bet Type:%s, Multiplier:%.2f (Original:%.2f) [Frozen Balance]", draw.PeriodNumber, betName, finalMultiplier, multiplier),
 					relatedId:   betId,
 					oldBalance:  oldFrozenBalance,
 					newBalance:  newFrozenBalance,

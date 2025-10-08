@@ -2,7 +2,7 @@ package game_canada28_api
 
 import (
 	"context"
-	v1 "demo/api/game_api/v1"
+	v1 "demo/api/game_canada28_api/v1"
 	"demo/internal/service/game_canada28_ws"
 	"fmt"
 

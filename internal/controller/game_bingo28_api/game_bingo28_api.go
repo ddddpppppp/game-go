@@ -1,0 +1,1 @@
+package game_bingo28_api

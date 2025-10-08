@@ -3,6 +3,8 @@ package cmd
 import (
 	"context"
 	"demo/boot"
+	"demo/internal/controller/game_bingo28_api"
+	"demo/internal/controller/game_bingo28_ws"
 	"demo/internal/controller/game_canada28_api"
 	"demo/internal/controller/game_canada28_ws"
 	"demo/internal/middleware"
@@ -45,6 +47,7 @@ var (
 				group.Middleware(middleware.ResponseHandler)
 				group.Bind(
 					game_canada28_api.NewV1(),
+					game_bingo28_api.NewV1(),
 				)
 			})
 
@@ -52,6 +55,11 @@ var (
 			s.Group("/game_canada28_ws", func(group *ghttp.RouterGroup) {
 				group.Middleware(middleware.NewUserAuth().UserAuth)
 				group.GET("/connect", game_canada28_ws.NewWsController().Connect)
+			})
+			// WebSocket路由
+			s.Group("/game_bingo28_ws", func(group *ghttp.RouterGroup) {
+				group.Middleware(middleware.NewUserAuth().UserAuth)
+				group.GET("/connect", game_bingo28_ws.NewWsController().Connect)
 			})
 			s.Run()
 			return nil
