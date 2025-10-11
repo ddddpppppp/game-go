@@ -11,7 +11,7 @@ gfcli:
       #     descriptionTag: true
 
       - link: "mysql:root:@tcp(127.0.0.1:3306)/gf"
-        tables: "game_bingo28_bet_types,game_bingo28_bets,game_bingo28_draws,game_bingo28_dynamic_odds"
+        tables: "game_keno_bet_types,game_keno_dynamic_odds,game_keno_draws,game_keno_bets"
         jsonCase: "CamelLower"
         removePrefix: "game_"
         group: "default"

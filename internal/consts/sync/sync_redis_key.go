@@ -8,4 +8,8 @@ const (
 	SyncBingo28ResKey      = "sync:bingo28:res:%s"
 	SyncBingo28AlertMsgKey = "sync:bingo28:alert_msg:%s"
 	SyncBingo28BonusKey    = "sync:bingo28:bonus:%s"
+
+	SyncKenoResKey      = "sync:keno:res:%s"
+	SyncKenoAlertMsgKey = "sync:keno:alert_msg:%s"
+	SyncKenoBonusKey    = "sync:keno:bonus:%s"
 )

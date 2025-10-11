@@ -7,6 +7,7 @@ import (
 	"demo/internal/controller/game_bingo28_ws"
 	"demo/internal/controller/game_canada28_api"
 	"demo/internal/controller/game_canada28_ws"
+	"demo/internal/controller/game_keno_ws"
 	"demo/internal/middleware"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -60,6 +61,11 @@ var (
 			s.Group("/game_bingo28_ws", func(group *ghttp.RouterGroup) {
 				group.Middleware(middleware.NewUserAuth().UserAuth)
 				group.GET("/connect", game_bingo28_ws.NewWsController().Connect)
+			})
+			// WebSocket路由
+			s.Group("/game_keno_ws", func(group *ghttp.RouterGroup) {
+				group.Middleware(middleware.NewUserAuth().UserAuth)
+				group.GET("/connect", game_keno_ws.NewWsController().Connect)
 			})
 			s.Run()
 			return nil
