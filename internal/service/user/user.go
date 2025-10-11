@@ -28,27 +28,63 @@ type JWTPayload struct {
 	Exp    int64  `json:"exp"`
 }
 
-// GetUser 获取当前用户
+// GetUser 获取当前用户（支持普通用户和admin）
 func (s *sUser) GetUser(ctx context.Context) (*do.Users, error) {
 	userId := s.GetUserId(ctx)
 	if userId == "" {
 		return nil, nil
 	}
+
+	// 先尝试从game_users表查询
 	var user *do.Users
 	err := dao.Users.Ctx(ctx).Where("uuid = ?", userId).Scan(&user)
 	if err != nil {
 		return nil, err
 	}
-	return user, nil
+
+	// 如果在game_users表中找到了，直接返回
+	if user != nil {
+		return user, nil
+	}
+
+	// 如果没找到，尝试从game_admin表查询（admin用户）
+	var admin *do.Admin
+	err = dao.Admin.Ctx(ctx).Where("uuid = ?", userId).Scan(&admin)
+	if err != nil {
+		return nil, err
+	}
+
+	// 如果找到admin，转换为Users结构返回
+	if admin != nil {
+		user = &do.Users{
+			Uuid:     admin.Uuid,
+			Nickname: admin.Nickname,
+			Username: admin.Username,
+			Avatar:   admin.Avatar,
+			Status:   admin.Status,
+		}
+		return user, nil
+	}
+
+	return nil, nil
 }
 
-// GetUserId 从JWT token获取用户ID
+// GetUserId 从JWT token或UUID获取用户ID
 func (s *sUser) GetUserId(ctx context.Context) string {
-	jwtKey := consts_user.USER_JWT_KEY
 	token := g.RequestFromCtx(ctx).GetQuery("token").String()
 	if token == "" {
 		return ""
 	}
+
+	// 检查是否为UUID格式（admin token）
+	// UUID格式: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (36字符，包含4个连字符)
+	if len(token) == 36 && strings.Count(token, "-") == 4 {
+		// 直接返回UUID作为用户ID（admin）
+		return token
+	}
+
+	// JWT token处理（普通用户）
+	jwtKey := consts_user.USER_JWT_KEY
 
 	// 分割token
 	parts := strings.Split(token, ".")
