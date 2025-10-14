@@ -12,4 +12,8 @@ const (
 	SyncKenoResKey      = "sync:keno:res:%s"
 	SyncKenoAlertMsgKey = "sync:keno:alert_msg:%s"
 	SyncKenoBonusKey    = "sync:keno:bonus:%s"
+
+	SyncBingoResKey      = "sync:bingo:res:%s"
+	SyncBingoAlertMsgKey = "sync:bingo:alert_msg:%s"
+	SyncBingoBonusKey    = "sync:bingo:bonus:%s"
 )

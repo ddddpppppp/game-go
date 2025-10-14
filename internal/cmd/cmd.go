@@ -6,6 +6,7 @@ import (
 	"demo/internal/controller/customer_service_ws"
 	"demo/internal/controller/game_bingo28_api"
 	"demo/internal/controller/game_bingo28_ws"
+	"demo/internal/controller/game_bingo_ws"
 	"demo/internal/controller/game_canada28_api"
 	"demo/internal/controller/game_canada28_ws"
 	"demo/internal/controller/game_keno_ws"
@@ -67,6 +68,11 @@ var (
 			s.Group("/game_keno_ws", func(group *ghttp.RouterGroup) {
 				group.Middleware(middleware.NewUserAuth().UserAuth)
 				group.GET("/connect", game_keno_ws.NewWsController().Connect)
+			})
+			// WebSocket路由
+			s.Group("/game_bingo_ws", func(group *ghttp.RouterGroup) {
+				group.Middleware(middleware.NewUserAuth().UserAuth)
+				group.GET("/connect", game_bingo_ws.NewWsController().Connect)
 			})
 			// Customer Service WebSocket路由
 			s.Group("/customer_service_ws", func(group *ghttp.RouterGroup) {
